@@ -21,7 +21,11 @@ sudo apt install -y \
     libsdl2-dev \
     libfreetype-dev \
     libgl1-mesa-dev \
-    libgles2-mesa-dev
+    libgles2-mesa-dev \
+    libegl1-mesa-dev \
+    mesa-utils \
+    doxygen \
+    graphviz
 
 python3 -m pip install --upgrade pip setuptools wheel
 python3 -m pip install "setuptools<80"
