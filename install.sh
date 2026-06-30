@@ -63,6 +63,7 @@ sudo apt install -y \
     ros-humble-mavros \
     ros-humble-mavros-extras \
     ros-humble-tf-transformations \
+    ros-humble-pcl-ros \
     python3-transforms3d \
     geographiclib-tools
 
