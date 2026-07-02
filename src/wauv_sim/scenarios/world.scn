@@ -1,19 +1,29 @@
 <?xml version="1.0"?>
 <scenario>
-	<environment>
-		<ned latitude="56.136459" longitude="-2.706819"/>
-		<ocean>
-			<water density="1011.0" jerlov="0.12"/>
-			<waves height="0.0"/>
-			<particles enabled="true"/>
-			<current type="uniform">
-				<velocity xyz="0.0 0.0 0.0"/>
-			</current>
-		</ocean>
-		<atmosphere>
-			<sun azimuth="45.0" elevation="90.0"/>
-		</atmosphere>
-	</environment>
+    <environment>
+        <!-- Parameters of simulated environment (obligatory) -->
+
+        <ned latitude="33.6694" longitude="-117.8231"/> <!-- geographic coordinates of the NED origin -->
+        <!-- ocean definitions -->
+        <ocean>
+            <water density="1031.0" jerlov="0.1" temperature="20.0"/> <!-- we wanna stay below jerlov 0.2 i think average pool conditions will be similar to jerlov 0.05-->
+            <waves height="0.0"/>
+            <particles enabled="true"/>
+            <current type="uniform">
+                <velocity xyz="0.0 0.0 0.0"/>
+            </current>
+        </ocean>
+
+        <!-- atmosphere definitions -->
+        <atmosphere>
+            <sun azimuth="165.0" elevation="75.0"/>
+            <conditions temperature="25.0" pressure="101300.0" humidity="0.55"/>
+            <wind type="uniform">
+                <velocity xyz="2.68 3.19 0.0"/> <!-- 15 kmph at about 220 degrees -->
+            </wind>
+        </atmosphere>
+    </environment>
+
 
 	<materials>
 		<material name="Neutral" density="1000.0" restitution="0.1"/>
@@ -34,7 +44,8 @@
 		</friction_table>
 	</materials>
 
-	<looks>
+    <!-- Definitions of looks, bodies, robots, sensors... -->
+    <looks>
 		<look name="black" gray="0.05" roughness="0.2"/>
 		<look name="yellow" rgb="1.0 0.9 0.0" roughness="0.3"/>
 		<look name="gray" gray="0.5" roughness="0.4" metalness="0.5"/>
@@ -43,43 +54,17 @@
 		<look name="duct" gray="0.1" roughness="0.4" metalness="0.5"/>		
 	</looks>
 
-	<static name="Seabed" type="model">
-		<physical>
-			<mesh filename="flat.obj" scale="1.0"/>
-			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-		</physical>
-		<material name="Rock"/>
-		<look name="sand"/>
-		<world_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 6.0"/>
-	</static>
-
-	<!-- OREINTATION  -->
-	<!-- Orientation with north -0.52 -->
-	<static name="Wavetank" type="model">
-		<physical>
-			<mesh filename="wavetank.obj" scale="1.0"/>
-			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-		</physical>
-		<material name="Rock"/>
-		<look name="tank"/>
-		<world_transform rpy="0.0 0.0 1.57" xyz="0.0 0.0 5.0"/>
-		<world_transform rpy="0.0 0.0 -.52" xyz="0.0 0.0 5.0"/>
-	</static> 
-
-	<static name="Wavetank_floor" type="model">
-		<physical>
-			<mesh filename="wavetank_floor.obj" scale="1.0"/>
-			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-		</physical>
-		<material name="Rock"/>
-		<look name="ltgray"/>
-		<world_transform rpy="0.0 0.0 1.57" xyz="0.0 0.0 -1.0"/>
-		<world_transform rpy="0.0 0.0 -.52" xyz="0.0 0.0 -1.0"/>
-	</static>
+            
+    <static name="pool" type="box">
+        <material name="Rock"/>
+        <look name="tank"/>
+        <dimensions xyz="50.0 23.0 2.13"/>
+        <world_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    </static>
 
 	<include file="$(find stonefish_bluerov2)/scenarios/bluerov2.scn">
 		<arg name="vehicle_name" value="bluerov2"/>
 		<arg name="position" value="0.0 0.0 0.5"/>
 		<arg name="orientation" value="0.0 0.0 0.0"/>
-	</include>
+	</include>  
 </scenario>
