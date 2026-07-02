@@ -55,12 +55,15 @@
 	</looks>
 
             
-    <static name="pool" type="box">
-        <material name="Rock"/>
-        <look name="tank"/>
-        <dimensions xyz="50.0 23.0 2.13"/>
-        <world_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-    </static>
+	<static name="Pool" type="model">
+		<physical>
+			<mesh filename="pool_model.obj" scale="1.0"/>
+			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+		</physical>
+		<material name="Rock"/>
+		<look name="tank"/>
+		<world_transform rpy="-1.57 0.0 0.0" xyz="0.0 0.0 2.0"/>
+	</static> 
 
 	<include file="$(find stonefish_bluerov2)/scenarios/bluerov2.scn">
 		<arg name="vehicle_name" value="bluerov2"/>
