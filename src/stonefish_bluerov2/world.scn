@@ -51,7 +51,6 @@
 		<look name="gray" gray="0.5" roughness="0.4" metalness="0.5"/>
 		<look name="ltgray" gray="0.75" roughness="1.0" metalness="0.0"/>
 		<look name="tank" rgb="0.9 0.9 0.9" roughness="0.9"/>
-		<look name="pool_textured" gray="1.0" roughness="0.6" texture="Pool_Texture.png"/>
 		<look name="duct" gray="0.1" roughness="0.4" metalness="0.5"/>		
 	</looks>
 
@@ -62,29 +61,8 @@
 			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
 		</physical>
 		<material name="Rock"/>
-		<look name="pool_textured"/>
+		<look name="tank"/>
 		<world_transform rpy="-1.57 0.0 0.0" xyz="0.0 0.0 2.0"/>
-	</static> 
-
-	<static name="Torpedo" type="model">
-		<physical>
-			<mesh filename="torpedo_task.obj" scale="1.0"/>
-			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-		</physical>
-		<material name="Rock"/>
-		<look name="ltgray"/>
-		<world_transform rpy="3.14 0.0 0.0" xyz="0.0 0.0 5.0"/>
-	</static> 
-
-	
-	<static name="Gate" type="model">
-		<physical>
-			<mesh filename="gate_stl.STL" scale="1.0"/>
-			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-		</physical>
-		<material name="Rock"/>
-		<look name="black"/>
-		<world_transform rpy="3.14 0.0 0.0" xyz="2.0 4.0 5.0"/>
 	</static> 
 
 	<include file="$(find stonefish_bluerov2)/scenarios/bluerov2.scn">

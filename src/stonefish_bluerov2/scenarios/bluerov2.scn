@@ -287,6 +287,16 @@
                         <link name="base_link"/>
                         <ros_publisher topic="/$(arg vehicle_name)/right"/>
                 </sensor>
+                <!-- ZED X Mini Depth Sensor Simulation Profile -->
+                <sensor name="zed_x_mini_depth" rate="60.0" type="depthcamera">
+                        <specs resolution_x="1920" resolution_y="1200" horizontal_fov="110.0" depth_min="0.1" depth_max="8.0"/>
+                        <settings range_min="0.1" range_max="8.0" gain="1.0"/>
+                        <noise multiplicative="0.01" additive="0.005"/>
+                        <display colormap="jet"/>
+                        <origin xyz="0.16 0.0 0.15" rpy="1.571 0.0 1.571"/>
+                        <link name="base_link"/>
+                        <ros_publisher topic="/$(arg vehicle_name)/depth_image"/>
+                </sensor>
 
                 <sensor name="multibeam" rate="10.0" type="multibeam">
                         <specs fov="90.0" steps="128"/>
