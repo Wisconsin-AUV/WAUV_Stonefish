@@ -76,10 +76,9 @@
 		<world_transform rpy="3.14 0.0 0.0" xyz="0.0 0.0 5.0"/>
 	</static> 
 
-	
 	<static name="Gate" type="model">
 		<physical>
-			<mesh filename="gate_stl.STL" scale="1.0"/>
+			<mesh filename="gate.obj" scale="1.0"/>
 			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
 		</physical>
 		<material name="Rock"/>

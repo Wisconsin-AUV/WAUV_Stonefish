@@ -1,7 +1,8 @@
 import os
 from launch import LaunchDescription
 from launch.actions import ExecuteProcess
- 
+from launch_ros.actions import Node
+
 def generate_launch_description():
  
     home = os.path.expanduser('~')
@@ -34,6 +35,21 @@ def generate_launch_description():
                 'ros2 run mavros mavros_node --ros-args '
                 '-p fcu_url:="udp://127.0.0.1:14551@" '
                 '-p use_sim_time:=false'],
+            output='screen'
+        ),
+
+        # start ROS nodes
+        Node(
+            package='wauv_sim',
+            executable='vehicle_manager',
+            name='vehicle_manager',
+            output='screen'
+        ),
+
+        Node(
+            package='wauv_sim',
+            executable='manual_controller',
+            name='manual_controller',
             output='screen'
         ),
  
