@@ -30,6 +30,7 @@ setup(
         'console_scripts': [
             'vehicle_manager = wauv_sim.vehicle_manager:main',
             'manual_controller = wauv_sim.manual_controller:main',
+            'xbox_controller = wauv_sim.xbox_controller:main',
         ],
     },
 )
