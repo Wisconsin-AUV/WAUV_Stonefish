@@ -52,6 +52,7 @@
 		<look name="ltgray" gray="0.75" roughness="1.0" metalness="0.0"/>
 		<look name="tank" rgb="0.9 0.9 0.9" roughness="0.9"/>
 		<look name="pool_textured" gray="1.0" roughness="0.6" texture="Pool_Texture.png"/>
+		<look name="gate_texture" gray="1.0" roughness="0.6" texture="gate_texture.png"/>
 		<look name="duct" gray="0.1" roughness="0.4" metalness="0.5"/>		
 	</looks>
 
@@ -82,7 +83,7 @@
 			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
 		</physical>
 		<material name="Rock"/>
-		<look name="black"/>
+		<look name="gate_texture"/>
 		<world_transform rpy="3.14 0.0 0.0" xyz="2.0 4.0 5.0"/>
 	</static> 
 
