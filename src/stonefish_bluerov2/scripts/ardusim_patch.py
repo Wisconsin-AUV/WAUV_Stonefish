@@ -139,9 +139,9 @@ class ArduSimPatch(Node):
 
             msg = '\n' + json.dumps(payload, separators=(',', ':')) + '\n'
             
-            print_tick += 1
-            if print_tick % 50 == 0:
-                print(f"SENDING (dt={dt:.3f}): {msg.strip()}")
+            # print_tick += 1
+            # if print_tick % 50 == 0:
+            #     print(f"SENDING (dt={dt:.3f}): {msg.strip()}")
                 
             try:
                 self.sock.sendto(msg.encode('ascii'), address)

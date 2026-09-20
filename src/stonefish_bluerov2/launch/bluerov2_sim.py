@@ -16,8 +16,8 @@ def generate_launch_description():
             'simulation_data': get_package_share_directory('stonefish_bluerov2')+'/data/',
             'scenario_desc': get_package_share_directory('wauv_sim')+'/scenarios/world.scn',
             'simulation_rate': '100.0',
-            'window_res_x': '1280',
-            'window_res_y': '720',
+            'window_res_x': '1920',
+            'window_res_y': '1080',
             'rendering_quality': 'high',
         }.items()
     )
