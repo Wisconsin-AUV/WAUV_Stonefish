@@ -61,6 +61,8 @@ class VehicleManager(Node):
         self.mode_timer = self.create_timer(1.0, self.retry_mode)
         self.arm_timer = self.create_timer(1.0, self.retry_arm)
 
+        self.target_mode = "GUIDED"
+
 
         # main loop
         self.timer = self.create_timer(
@@ -78,8 +80,8 @@ class VehicleManager(Node):
     def mode_response(self, future):
         res = future.result()
 
-        if self.state.mode == "GUIDED":
-            self.get_logger().info("Mode confirmed GUIDED")
+        if self.state.mode == self.target_mode:
+            self.get_logger().info("Mode confirmed ", self.target_mode)
         else:
             self.get_logger().warn("Mode request sent but not yet active")
 
@@ -87,11 +89,11 @@ class VehicleManager(Node):
         if not self.state.connected:
             return
         
-        if self.state.mode == "GUIDED":
+        if self.state.mode == self.target_mode:
             return
         
         # try again
-        self.set_mode("GUIDED")
+        self.set_mode(self.target_mode)
 
     def arm_vehicle(self):
         req = CommandBool.Request()
@@ -116,7 +118,7 @@ class VehicleManager(Node):
             return
         
         # must be guided before armed
-        if self.state.mode != "GUIDED":
+        if self.state.mode != self.target_mode:
             return
         
         if not self.state.armed:
@@ -136,7 +138,7 @@ class VehicleManager(Node):
         self.vehicle_ready = (
             self.state.connected and
             self.state.armed and
-            self.state.mode == "GUIDED"
+            self.state.mode == self.target_mode
         )
 
         msg = Bool()

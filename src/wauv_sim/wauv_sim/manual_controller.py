@@ -7,7 +7,7 @@ Description: ROS2 node to command velocity using keyboard (WASD + QE)
 
 import rclpy
 from rclpy.node import Node
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import TwistStamped
 from pynput import keyboard
 
 
@@ -20,8 +20,8 @@ class ManualController(Node):
         # Publisher sends velocity commands (Twist messages)
         # Topic: MAVROS velocity command topic
         self.cmd_pub = self.create_publisher(
-            Twist,
-            '/mavros/setpoint_velocity/cmd_vel_unstamped',
+            TwistStamped,
+            '/mavros/setpoint_velocity/cmd_vel',
             10  # queue size
         )
 
@@ -121,17 +121,18 @@ class ManualController(Node):
         Runs at 20 Hz.
         Publishes the current velocity as a Twist message.
         """
-        cmd = Twist()
-
+        cmd = TwistStamped()
+        cmd.header.frame_id = 'base_link'
+        cmd_twist = cmd.twist
         # Assign current velocities to the message
-        cmd.linear.x = self.linear_x
-        cmd.linear.y = self.linear_y
-        cmd.linear.z = self.linear_z
+        cmd_twist.linear.x = self.linear_x
+        cmd_twist.linear.y = self.linear_y
+        cmd_twist.linear.z = self.linear_z
 
         # Angular velocities are not used (no rotation control yet)
-        cmd.angular.x = 0.0
-        cmd.angular.y = 0.0
-        cmd.angular.z = self.yaw
+        cmd_twist.angular.x = 0.0
+        cmd_twist.angular.y = 0.0
+        cmd_twist.angular.z = self.yaw
 
         # Publish command to MAVROS
         self.cmd_pub.publish(cmd)
