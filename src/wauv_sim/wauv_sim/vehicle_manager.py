@@ -61,7 +61,7 @@ class VehicleManager(Node):
         self.mode_timer = self.create_timer(1.0, self.retry_mode)
         self.arm_timer = self.create_timer(1.0, self.retry_arm)
 
-        self.target_mode = "GUIDED"
+        self.target_mode = "ALT_HOLD"
 
 
         # main loop

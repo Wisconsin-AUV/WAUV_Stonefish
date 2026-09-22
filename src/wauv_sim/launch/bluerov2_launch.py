@@ -15,7 +15,8 @@ def generate_launch_description():
             cmd=['bash', '-c',
                 f'source {home}/.profile && cd {ardupilot_path} && '
                 'sim_vehicle.py -v ArduSub -w -L RATBeach --map --console '
-                '-f vectored_6dof --model JSON --out=udp:127.0.0.1:14551'],
+                '-f vectored_6dof --model JSON --out=udp:127.0.0.1:14551 '
+                '--add-param-file=/home/aarav-linux/WAUV/WAUV_Stonefish/config/ardusub_sim.parm'],
             output='screen'
         ),
 

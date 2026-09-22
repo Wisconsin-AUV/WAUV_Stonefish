@@ -7,6 +7,7 @@ import threading
 from std_msgs.msg import Float64MultiArray
 from sensor_msgs.msg import Imu
 from nav_msgs.msg import Odometry
+from sensor_msgs.msg import FluidPressure
 from tf_transformations import euler_from_quaternion
 
 class ArduSimPatch(Node):
@@ -15,8 +16,9 @@ class ArduSimPatch(Node):
         
         # Shared State & Thread Safety
         self.lock = threading.Lock()
-        self.imu = None
-        self.odom = None
+        self.imu = Imu()
+        self.odom = Odometry()
+        self.pressure = FluidPressure()
         
         # Virtual Simulation Time
         self._t_sim = 0.0
@@ -24,6 +26,7 @@ class ArduSimPatch(Node):
         # Subscribers
         self.create_subscription(Imu, 'imu', self._imu_cb, 1)
         self.create_subscription(Odometry, 'odometry', self._odom_cb, 1)
+        self.create_subscription(FluidPressure, 'pressure', self._pressure_cb, 1)
         
         # Publisher
         self.pub_pwm = self.create_publisher(Float64MultiArray, 'setpoint/pwm', 1)
@@ -45,6 +48,10 @@ class ArduSimPatch(Node):
     def _odom_cb(self, msg):
         with self.lock:
             self.odom = msg
+
+    def _pressure_cb(self, msg):
+        with self.lock:
+            self.pressure = msg
 
     def _udp_loop(self):
         fmt = 'HHI16H'
@@ -80,13 +87,10 @@ class ArduSimPatch(Node):
             setpoints = [(x - 1500) / 400.0 for x in pwm_thrusters]
             self.pub_pwm.publish(Float64MultiArray(data=setpoints))
 
-            # Safely grab the latest sensor data
-            with self.lock:
-                if self.imu is None or self.odom is None:
-                    continue
-                # Copy references locally to minimize lock time
-                imu_msg = self.imu
-                odom_msg = self.odom
+            # Copy references locally to minimize lock time
+            imu_msg = self.imu
+            odom_msg = self.odom
+            pressure_msg = self.pressure
 
             # Increment virtual clock by the exact dt expected by ArduSub
             self._t_sim += dt
@@ -101,7 +105,7 @@ class ArduSimPatch(Node):
 
             px = odom_msg.pose.pose.position.x
             py = odom_msg.pose.pose.position.y
-            pz = odom_msg.pose.pose.position.z
+            pz = pressure_msg.fluid_pressure / (1025.0 * 9.80665)
 
             q = odom_msg.pose.pose.orientation
             roll, pitch, yaw = euler_from_quaternion([q.x, q.y, q.z, q.w])

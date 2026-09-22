@@ -235,14 +235,14 @@
                         <ros_publisher topic="/$(arg vehicle_name)/odometry"/>
                 </sensor>
 
-                <sensor name="INS" rate="100.0" type="ins">
+                <!-- <sensor name="INS" rate="100.0" type="ins">
                         <output_frame rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
                         <noise angular_velocity="0.00001745" linear_acceleration="0.00005"/>
                         <external_sensors dvl="dvl" gps="gps" pressure="pressure"/>
                         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
                         <link name="base_link"/>
                         <ros_publisher topic="/$(arg vehicle_name)/INS"/>
-                </sensor>
+                </sensor> -->
 
                 <sensor name="pressure" type="pressure" rate="5.0">
                         <link name="base_link"/>
@@ -258,7 +258,7 @@
                         <ros_publisher topic="/$(arg vehicle_name)/imu"/>
                 </sensor>
 
-                <sensor name="gps" type="gps" rate="1.0">
+                <!-- <sensor name="gps" type="gps" rate="1.0">
                         <link name="base_link"/>
                         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.15"/>
                         <noise ned_position="0.5"/>
@@ -273,7 +273,7 @@
                         <noise velocity="0.0015" altitude="0.001"/>
                         <ros_publisher topic="/$(arg vehicle_name)/dvl_sim"
                                            altitude_topic="/$(arg vehicle_name)/altitude"/>
-                </sensor>
+                </sensor> -->
 
                 <sensor name="camera_left" rate="30.0" type="camera">
                         <specs resolution_x="640" resolution_y="480" horizontal_fov="75.0"/>
@@ -298,7 +298,7 @@
                         <ros_publisher topic="/$(arg vehicle_name)/depth_image"/>
                 </sensor>
 
-                <sensor name="multibeam" rate="10.0" type="multibeam">
+                <!-- <sensor name="multibeam" rate="10.0" type="multibeam">
                         <specs fov="90.0" steps="128"/>
                         <range distance_min="0.25" distance_max="50.0"/>
                         <noise distance="0.1"/>
@@ -306,7 +306,7 @@
                         <origin xyz="0.2 0.0 0.2" rpy="0.0 -0.0 0.0"/>
                         <link name="base_link"/>
                         <ros_publisher topic="/$(arg vehicle_name)/multibeam"/>
-                </sensor>
+                </sensor> -->
 
                 <world_transform xyz="$(arg position)" rpy="$(arg orientation)"/>
 
