@@ -7,8 +7,9 @@ Description: ROS2 node to command velocity using keyboard (WASD + QE)
 
 import rclpy
 from rclpy.node import Node
-from geometry_msgs.msg import TwistStamped
+# from geometry_msgs.msg import TwistStamped
 from pynput import keyboard
+from mavros_msgs.msg import PositionTarget
 
 
 class ManualController(Node):
@@ -20,8 +21,8 @@ class ManualController(Node):
         # Publisher sends velocity commands (Twist messages)
         # Topic: MAVROS velocity command topic
         self.cmd_pub = self.create_publisher(
-            TwistStamped,
-            '/mavros/setpoint_velocity/cmd_vel',
+            PositionTarget,
+            'mavros/setpoint_raw/local',
             10  # queue size
         )
 
@@ -121,19 +122,16 @@ class ManualController(Node):
         Runs at 20 Hz.
         Publishes the current velocity as a Twist message.
         """
-        cmd = TwistStamped()
-        cmd.header.frame_id = 'base_link'
-        cmd_twist = cmd.twist
-        # Assign current velocities to the message
-        cmd_twist.linear.x = self.linear_x
-        cmd_twist.linear.y = self.linear_y
-        cmd_twist.linear.z = self.linear_z
+        cmd = PositionTarget()
+        cmd.coordinate_frame = 8
 
-        # Angular velocities are not used (no rotation control yet)
-        cmd_twist.angular.x = 0.0
-        cmd_twist.angular.y = 0.0
-        cmd_twist.angular.z = self.yaw
+        cmd.type_mask = 1991 #ignores eveerything but xyz vel and yawrate
 
+        cmd.velocity.x = self.linear_x
+        cmd.velocity.y = self.linear_y
+        cmd.velocity.z = self.linear_z
+
+        cmd.yaw_rate = self.yaw
         # Publish command to MAVROS
         self.cmd_pub.publish(cmd)
 

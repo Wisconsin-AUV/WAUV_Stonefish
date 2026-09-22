@@ -1,0 +1,42 @@
+	<robot name="$(arg vehicle_name)" fixed="false" self_collisions="false">
+        <base_link name="base_link" type="compound" physics="submerged">
+ 
+            <external_part name="Tube" type="model" physics="submerged" buoyant="true">
+                <physical>
+                    <mesh filename="Assembly 1 - 200-004 Acrylic Tube.obj" scale="1"/>
+                    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                </physical>
+                <material name="Acrylic"/>
+                <look name="hullgrey"/>
+                <compound_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            </external_part>
+ 
+            <external_part name="CapFront" type="model" physics="submerged" buoyant="true">
+                <physical>
+                    <mesh filename="Aluminum End Cap.obj" scale="1"/>
+                    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                </physical>
+                <material name="Aluminium"/>
+                <look name="hullgrey"/>
+                <compound_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            </external_part>
+ 
+            <external_part name="CapBack" type="model" physics="submerged" buoyant="true">
+                <physical>
+                    <mesh filename="Acrylic End Cap.obj" scale="1"/>
+                    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                </physical>
+                <material name="Aluminium"/>
+                <look name="hullgrey"/>
+                <compound_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            </external_part>
+        </base_link>
+ 
+        <sensor name="odometry" type="odometry" rate="10.0">
+            <link name="base_link"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            <ros_publisher topic="/$(arg vehicle_name)/odometry"/>
+        </sensor>
+ 
+        <world_transform xyz="$(arg position)" rpy="$(arg orientation)"/>
+    </robot>

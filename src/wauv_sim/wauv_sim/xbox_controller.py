@@ -1,8 +1,8 @@
 import rclpy
 from rclpy.node import Node
-from geometry_msgs.msg import Twist
-from pynput import keyboard
+# from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Joy
+from mavros_msgs.msg import PositionTarget
 
 class XboxController(Node):
 
@@ -13,8 +13,8 @@ class XboxController(Node):
         # Publisher sends velocity commands (Twist messages)
         # Topic: MAVROS velocity command topic
         self.cmd_pub = self.create_publisher(
-            Twist,
-            '/mavros/setpoint_velocity/cmd_vel_unstamped',
+            PositionTarget,
+            'mavros/setpoint_raw/local',
             10
         )
 
@@ -44,17 +44,16 @@ class XboxController(Node):
         Runs at 20 Hz.
         Publishes the current velocity as a Twist message.
         """
-        cmd = Twist()
+        cmd = PositionTarget()
+        cmd.coordinate_frame = 8
 
-        # Assign current velocities to the message
-        cmd.linear.x = self.linear_x
-        cmd.linear.y = self.linear_y
-        cmd.linear.z = self.linear_z
+        cmd.type_mask = 1991 #ignores eveerything but xyz vel and yawrate
 
-        cmd.angular.x = 0.0
-        cmd.angular.y = 0.0
-        cmd.angular.z = self.yaw
+        cmd.velocity.x = self.linear_x
+        cmd.velocity.y = self.linear_y
+        cmd.velocity.z = self.linear_z
 
+        cmd.yaw_rate = self.yaw
         # Publish command to MAVROS
         self.cmd_pub.publish(cmd)
 
