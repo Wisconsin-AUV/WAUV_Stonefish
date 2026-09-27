@@ -5,3 +5,4 @@ __pycache__/
 .vscode/
 eeprom*
 mav.t*
+urdf_models/
